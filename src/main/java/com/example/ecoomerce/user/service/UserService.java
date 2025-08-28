@@ -1,12 +1,14 @@
 package com.example.ecoomerce.user.service;
 
 import com.example.ecoomerce.exception.UserNotFoundException;
+import com.example.ecoomerce.user.dto.CreateUserRequest;
 import com.example.ecoomerce.user.dto.UserDto;
 import com.example.ecoomerce.user.dto.convertor.UserDtoConvertor;
 import com.example.ecoomerce.user.model.User;
 import com.example.ecoomerce.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.net.CacheRequest;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -32,5 +34,13 @@ public class UserService {
         User user = userRepository.findUserByMail(mail).orElseThrow(() -> new UserNotFoundException("User not found with mail: " + mail));
         return userDtoConvertor.toDto(user);
     }
+
+    public UserDto createUser (CreateUserRequest createUserRequest)
+    {
+        User user = new User(createUserRequest.getMail(),createUserRequest.getFirstName(),createUserRequest.getLastName(),createUserRequest.getPhoneNumber());
+        return userDtoConvertor.toDto(userRepository.save(user));
+    }
+
+
 
 }
