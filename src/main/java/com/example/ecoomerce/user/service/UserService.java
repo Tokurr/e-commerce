@@ -2,6 +2,7 @@ package com.example.ecoomerce.user.service;
 
 import com.example.ecoomerce.exception.UserNotFoundException;
 import com.example.ecoomerce.user.dto.CreateUserRequest;
+import com.example.ecoomerce.user.dto.UpdateUserRequest;
 import com.example.ecoomerce.user.dto.UserDto;
 import com.example.ecoomerce.user.dto.convertor.UserDtoConvertor;
 import com.example.ecoomerce.user.model.User;
@@ -41,6 +42,13 @@ public class UserService {
         return userDtoConvertor.toDto(userRepository.save(user));
     }
 
-
+    public UserDto updateUser(String mail,UpdateUserRequest updateUserRequest)
+    {
+        User user = userRepository.findUserByMail(mail).orElseThrow(() -> new UserNotFoundException("User not found with mail: " + mail));
+        user.setFirstName(updateUserRequest.getFirstName());
+        user.setLastName(updateUserRequest.getLastName());
+        user.setPhoneNumber(updateUserRequest.getPhoneNumber());
+        return userDtoConvertor.toDto(userRepository.save(user));
+    }
 
 }
