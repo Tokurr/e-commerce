@@ -14,5 +14,9 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
 
-
+    @ExceptionHandler(UserIsNotActiveException.class)
+    public ResponseEntity<Object> UserIsNotActiveException(Exception exception)
+    {
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 }

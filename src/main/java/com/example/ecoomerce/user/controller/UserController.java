@@ -3,7 +3,7 @@ package com.example.ecoomerce.user.controller;
 import com.example.ecoomerce.user.dto.CreateUserRequest;
 import com.example.ecoomerce.user.dto.UpdateUserRequest;
 import com.example.ecoomerce.user.dto.UserDto;
-import com.example.ecoomerce.user.dto.convertor.UserDtoConvertor;
+import com.example.ecoomerce.user.model.User;
 import com.example.ecoomerce.user.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -45,6 +45,24 @@ public class UserController {
     public ResponseEntity<UserDto> updateUser(@PathVariable String mail ,@RequestBody UpdateUserRequest updateUserRequest)
     {
         return ResponseEntity.ok(userService.updateUser(mail,updateUserRequest));
+    }
+
+    @PatchMapping("/{id}/active")
+    public ResponseEntity<Void> activeUser(@PathVariable("id") Long id){
+        userService.activeUser(id);
+        return ResponseEntity.noContent().build();
+    }
+    @PatchMapping("/{id}/deactivate")
+    public ResponseEntity<Void> deactivateUser(@PathVariable("id") Long id){
+        deactivateUser(id);
+        return ResponseEntity.noContent().build();
+    }
+
+
+    @DeleteMapping
+    public void deleteUSer(@PathVariable Long id)
+    {
+        userService.deleteUser(id);
     }
 
 

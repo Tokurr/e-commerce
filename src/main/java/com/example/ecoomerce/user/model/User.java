@@ -33,11 +33,14 @@ public class User {
     )
     String phoneNumber;
 
-    public User(String mail, String firstName, String lastName, String phoneNumber) {
+    Boolean isActive;
+
+    public User(String mail, String firstName, String lastName, String phoneNumber,Boolean isActive) {
         this.mail = mail;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
+        this.isActive = isActive;
     }
 
 }
