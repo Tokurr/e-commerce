@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "users")
 @AllArgsConstructor
@@ -33,7 +35,7 @@ public class User {
     )
     String phoneNumber;
 
-    Boolean isActive;
+    boolean isActive;
 
     public User(String mail, String firstName, String lastName, String phoneNumber,Boolean isActive) {
         this.mail = mail;
@@ -43,4 +45,16 @@ public class User {
         this.isActive = isActive;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return isActive == user.isActive && Objects.equals(id, user.id) && Objects.equals(mail, user.mail) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(phoneNumber, user.phoneNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, mail, firstName, lastName, phoneNumber, isActive);
+    }
 }

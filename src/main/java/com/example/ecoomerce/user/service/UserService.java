@@ -9,9 +9,8 @@ import com.example.ecoomerce.user.dto.convertor.UserDtoConvertor;
 import com.example.ecoomerce.user.model.User;
 import com.example.ecoomerce.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @Service
 public class UserService {
@@ -26,12 +25,12 @@ public class UserService {
 
     public List<UserDto> getAllUsers()
     {
-        return userRepository.findAll().stream().map(user -> userDtoConvertor.toDto(user)).collect(Collectors.toList());
+        return  userDtoConvertor.toDtoList(userRepository.findAll());
     }
 
     public UserDto getUserByMail(String mail)
     {
-        User user = userRepository.findUserByMail(mail).orElseThrow(() -> new UserNotFoundException("User not found with mail: " + mail));
+        User user = userRepository.findByMailOrThrow(mail);
         return userDtoConvertor.toDto(user);
     }
 
@@ -43,9 +42,9 @@ public class UserService {
 
     public UserDto updateUser(String mail,UpdateUserRequest updateUserRequest)
     {
-        User user =userRepository.findUserByMail(mail).orElseThrow(() -> new UserNotFoundException("User not found with mail: " + mail));
+        User user = userRepository.findByMailOrThrow(mail);
 
-        if(!user.getIsActive())
+        if(!user.isActive())
         {
             throw new UserIsNotActiveException("The user wanted update is not active!");
 
@@ -58,7 +57,7 @@ public class UserService {
 
     public void deactivateUser(Long id)
     {
-        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found with mail: " + id));
+        User user = userRepository.findByIdOrThrow(id);
 
         User updateUser = new User(user.getId(),
                 user.getMail(),
@@ -72,7 +71,7 @@ public class UserService {
     }
 
     public void activeUser(Long id){
-        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found with id: " + id));
+        User user = userRepository.findByIdOrThrow(id);
 
         User updateUser = new User(user.getId(),
                 user.getMail(),
@@ -86,8 +85,8 @@ public class UserService {
 
      public void deleteUser(Long id)
     {
-        Boolean bool =  userRepository.existsById(id);
-        if(bool)
+
+        if(userRepository.existsById(id))
         {
             userRepository.deleteById(id);
 
@@ -97,8 +96,6 @@ public class UserService {
             throw new UserNotFoundException("User not found with id: " + id);
 
         }
-
-
     }
 
 

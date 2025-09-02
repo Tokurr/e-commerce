@@ -54,7 +54,7 @@ public class UserController {
     }
     @PatchMapping("/{id}/deactivate")
     public ResponseEntity<Void> deactivateUser(@PathVariable("id") Long id){
-        deactivateUser(id);
+         userService.deactivateUser(id);
         return ResponseEntity.noContent().build();
     }
 
