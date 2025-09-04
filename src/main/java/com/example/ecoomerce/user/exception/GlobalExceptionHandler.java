@@ -1,4 +1,4 @@
-package com.example.ecoomerce.exception;
+package com.example.ecoomerce.user.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,4 +19,11 @@ public class GlobalExceptionHandler {
     {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(CommunicationInfoNotFoundException.class)
+    public ResponseEntity<Object> communicationInfoNotFound(Exception exception)
+    {
+        return new ResponseEntity<>(exception.getMessage(),HttpStatus.NOT_FOUND);
+    }
+
 }

@@ -1,8 +1,8 @@
 package com.example.ecoomerce.user.service;
 
 import com.example.ecoomerce.TestSupport;
-import com.example.ecoomerce.exception.UserIsNotActiveException;
-import com.example.ecoomerce.exception.UserNotFoundException;
+import com.example.ecoomerce.user.exception.UserIsNotActiveException;
+import com.example.ecoomerce.user.exception.UserNotFoundException;
 import com.example.ecoomerce.user.dto.CreateUserRequest;
 import com.example.ecoomerce.user.dto.UpdateUserRequest;
 import com.example.ecoomerce.user.dto.UserDto;
@@ -14,15 +14,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.context.annotation.EnableLoadTimeWeaving;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
 
 class UserServiceTest {
 

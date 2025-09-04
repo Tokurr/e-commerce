@@ -1,4 +1,4 @@
-package com.example.ecoomerce.exception;
+package com.example.ecoomerce.user.exception;
 
 
 public class UserIsNotActiveException extends RuntimeException{

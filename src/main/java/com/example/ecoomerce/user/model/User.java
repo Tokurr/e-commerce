@@ -8,7 +8,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -35,6 +38,8 @@ public class User {
     )
     String phoneNumber;
 
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
+    private Set<CommunicationInfo> communicationInfoList = new HashSet<>();
     boolean isActive;
 
     public User(String mail, String firstName, String lastName, String phoneNumber,Boolean isActive) {
@@ -44,7 +49,13 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.isActive = isActive;
     }
-
+    public User(Long id, String mail, String firstName, String lastName, String phoneNumber,Boolean isActive) {
+        this.mail = mail;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.isActive = isActive;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -57,4 +68,5 @@ public class User {
     public int hashCode() {
         return Objects.hash(id, mail, firstName, lastName, phoneNumber, isActive);
     }
+
 }

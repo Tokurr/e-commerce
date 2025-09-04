@@ -1,6 +1,6 @@
 package com.example.ecoomerce.user.repository;
 
-import com.example.ecoomerce.exception.UserNotFoundException;
+import com.example.ecoomerce.user.exception.UserNotFoundException;
 import com.example.ecoomerce.user.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -1,7 +1,7 @@
 package com.example.ecoomerce.user.service;
 
-import com.example.ecoomerce.exception.UserIsNotActiveException;
-import com.example.ecoomerce.exception.UserNotFoundException;
+import com.example.ecoomerce.user.exception.UserIsNotActiveException;
+import com.example.ecoomerce.user.exception.UserNotFoundException;
 import com.example.ecoomerce.user.dto.CreateUserRequest;
 import com.example.ecoomerce.user.dto.UpdateUserRequest;
 import com.example.ecoomerce.user.dto.UserDto;
@@ -59,12 +59,7 @@ public class UserService {
     {
         User user = userRepository.findByIdOrThrow(id);
 
-        User updateUser = new User(user.getId(),
-                user.getMail(),
-                user.getFirstName(),
-                user.getLastName(),
-                user.getPhoneNumber(),
-                false);
+        User updateUser = new User(user.getId(), user.getMail(), user.getFirstName(),user.getLastName(),user.getPhoneNumber(),false);
 
        userRepository.save(updateUser);
 
@@ -96,6 +91,11 @@ public class UserService {
             throw new UserNotFoundException("User not found with id: " + id);
 
         }
+    }
+
+    protected User findByUserId(Long id)
+    {
+       return userRepository.findById(id).orElseThrow(()-> new UserNotFoundException("User not found with id: " + id));
     }
 
 
