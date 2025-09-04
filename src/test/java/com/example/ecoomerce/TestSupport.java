@@ -1,5 +1,6 @@
 package com.example.ecoomerce;
 
+import com.example.ecoomerce.user.dto.CommunicationInfoDto;
 import com.example.ecoomerce.user.dto.UserDto;
 import com.example.ecoomerce.user.model.User;
 
@@ -23,8 +24,9 @@ public class TestSupport {
     {
         List<UserDto> userDtoList = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-
-            UserDto generatedUserDto = new UserDto("exa" + i +"mple@outlook.com","tayyib" +i,"okur" +i,"0536591376" +i);
+            List<CommunicationInfoDto>  communicationInfoDto = new ArrayList<>();
+            communicationInfoDto.add(new CommunicationInfoDto("adres1","adres2","adres3","adres4"));
+            UserDto generatedUserDto = new UserDto("exa" + i +"mple@outlook.com","tayyib" +i,"okur" +i,"0536591376" +i,communicationInfoDto);
             userDtoList.add(generatedUserDto);
         }
 

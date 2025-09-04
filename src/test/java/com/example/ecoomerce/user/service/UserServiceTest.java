@@ -1,6 +1,7 @@
 package com.example.ecoomerce.user.service;
 
 import com.example.ecoomerce.TestSupport;
+import com.example.ecoomerce.user.dto.CommunicationInfoDto;
 import com.example.ecoomerce.user.exception.UserIsNotActiveException;
 import com.example.ecoomerce.user.exception.UserNotFoundException;
 import com.example.ecoomerce.user.dto.CreateUserRequest;
@@ -15,6 +16,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -63,7 +65,9 @@ class UserServiceTest {
         String mail = "okurtayyib@outlook.com";
 
         User user = new User(1L,"okurtayyib@outlook.com","tayyib","okur","05439914532",true);
-        UserDto userDto = new UserDto("okurtayyib@outlook.com","tayyib","okur","05439914532");
+        List<CommunicationInfoDto>  communicationInfoDto = new ArrayList<>();
+        communicationInfoDto.add(new CommunicationInfoDto("adres1","adres2","adres3","adres4"));
+        UserDto userDto = new UserDto("okurtayyib@outlook.com","tayyib","okur","05439914532",communicationInfoDto);
         Mockito.when(userRepository.findByMailOrThrow(mail)).thenReturn(user);
         Mockito.when(convertor.toDto(user)).thenReturn(userDto);
         UserDto returnUserDto = userService.getUserByMail(mail);
@@ -92,8 +96,9 @@ class UserServiceTest {
         CreateUserRequest createUserRequest = new CreateUserRequest("okurtayyib@outlook.com","tayyib","okur","05439914532");
         User user = new User("okurtayyib@outlook.com","tayyib","okur","05439914532",true);
         User savedUser = new User(1L,"okurtayyib@outlook.com","tayyib","okur","05439914532",true);
-
-        UserDto userDto = new UserDto("okurtayyib@outlook.com","tayyib","okur","05439914532");
+        List<CommunicationInfoDto>  communicationInfoDto = new ArrayList<>();
+        communicationInfoDto.add(new CommunicationInfoDto("adres1","adres2","adres3","adres4"));
+        UserDto userDto = new UserDto("okurtayyib@outlook.com","tayyib","okur","05439914532",communicationInfoDto);
         Mockito.when(userRepository.save(user)).thenReturn(savedUser);
         Mockito.when(convertor.toDto(savedUser)).thenReturn(userDto);
 
@@ -110,7 +115,10 @@ class UserServiceTest {
     {
         User user = new User(1L,"okurtayyib@outlook.com","tayyib","okur","05439914532",true);
         User savedUser = new User(1L,"okurtayyib@outlook.com","tayyib2","okur2","05439914532",true);
-        UserDto userDto = new UserDto("okurtayyib@outlook.com","tayyib2","okur2","05439914532");
+
+        List<CommunicationInfoDto>  communicationInfoDto = new ArrayList<>();
+        communicationInfoDto.add(new CommunicationInfoDto("adres1","adres2","adres3","adres4"));
+        UserDto userDto = new UserDto("okurtayyib@outlook.com","tayyib","okur","05439914532",communicationInfoDto);
 
         String mail = "okurtayyib@outlook.com";
         UpdateUserRequest updateUserRequest = new UpdateUserRequest("tayyib","okur","05439914532");
