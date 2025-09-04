@@ -5,6 +5,7 @@ import com.example.ecoomerce.user.dto.UpdateUserRequest;
 import com.example.ecoomerce.user.dto.UserDto;
 import com.example.ecoomerce.user.model.User;
 import com.example.ecoomerce.user.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,13 +37,13 @@ public class UserController {
 
 
     @PostMapping()
-    public ResponseEntity<UserDto> createUser(@RequestBody CreateUserRequest createUserRequest)
+    public ResponseEntity<UserDto> createUser(@Valid @RequestBody CreateUserRequest createUserRequest)
     {
        return ResponseEntity.ok(userService.createUser(createUserRequest));
     }
 
     @PutMapping("/{mail}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable String mail ,@RequestBody UpdateUserRequest updateUserRequest)
+    public ResponseEntity<UserDto> updateUser(@PathVariable String mail ,@Valid  @RequestBody UpdateUserRequest updateUserRequest)
     {
         return ResponseEntity.ok(userService.updateUser(mail,updateUserRequest));
     }

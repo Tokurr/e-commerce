@@ -1,5 +1,6 @@
 package com.example.ecoomerce.user.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,9 +10,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UpdateCommunicationInfo {
 
-    private  String address;
-    private  String city;
-    private  String country;
-    private  String postCode;
+    @NotBlank(message = "Address cannot be empty")
+    private String address;
+
+    @NotBlank(message = "City cannot be empty")
+    private String city;
+
+    @NotBlank(message = "Country cannot be empty")
+    private String country;
+
+    @NotBlank(message = "Post code cannot be empty")
+    private String postCode;
 
 }

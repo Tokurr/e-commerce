@@ -25,17 +25,11 @@ public class User {
     Long id;
 
     @Column(unique = true)
-    @Email(message = "Please provide a valid email address")
     String mail;
-    @NotBlank(message = "First name cannot be empty")
     String firstName;
-    @NotBlank(message = "Last name cannot be empty")
 
     String lastName;
-    @Pattern(
-            regexp = "^(\\+90|0)?5\\d{9}$",
-            message = "Please provide a valid phone number (e.g., 05554443322)"
-    )
+
     String phoneNumber;
 
     @OneToMany(mappedBy = "user",fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)

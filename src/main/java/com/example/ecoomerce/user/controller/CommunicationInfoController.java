@@ -4,6 +4,7 @@ import com.example.ecoomerce.user.dto.CommunicationInfoDto;
 import com.example.ecoomerce.user.dto.CreateCommunicationInfoRequest;
 import com.example.ecoomerce.user.dto.UpdateCommunicationInfo;
 import com.example.ecoomerce.user.service.CommunicationInfoService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,14 +20,14 @@ public class CommunicationInfoController {
     }
 
     @PostMapping
-    public ResponseEntity<CommunicationInfoDto> createCommunicationInfo(@RequestBody CreateCommunicationInfoRequest createCommunicationInfoRequest)
+    public ResponseEntity<CommunicationInfoDto> createCommunicationInfo(@Valid @RequestBody CreateCommunicationInfoRequest createCommunicationInfoRequest)
     {
         return ResponseEntity.ok(communicationInfoService.createCommunicationInfo(createCommunicationInfoRequest));
 
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CommunicationInfoDto> updateCommunicationInfo(@PathVariable Long id, @RequestBody UpdateCommunicationInfo updateCommunicationInfo)
+    public ResponseEntity<CommunicationInfoDto> updateCommunicationInfo(@PathVariable Long id,@Valid  @RequestBody UpdateCommunicationInfo updateCommunicationInfo)
     {
         return ResponseEntity.ok(communicationInfoService.updateCommunicationInfo(id,updateCommunicationInfo));
     }
