@@ -1,12 +1,13 @@
-version: "3.8"
+version: "3.9"
+
 services:
-  postgres:
+  postgres_db:
     image: postgres:16
     container_name: postgres_db
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 123
-      POSTGRES_DB: ecoomerce_db
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ecoomerce
     ports:
       - "5432:5432"
     volumes:
@@ -18,27 +19,31 @@ services:
     environment:
       - discovery.type=single-node
       - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
     ports:
       - "9200:9200"
-    volumes:
-      - es_data:/usr/share/elasticsearch/data
+      - "9300:9300"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9200/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   app:
     build: .
     container_name: ecoomerce_app
-    depends_on:
-      - postgres
-      - elasticsearch
     ports:
       - "8080:8080"
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/ecoomerce_db
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: 123
-      SPRING_DATA_ELASTICSEARCH_CLUSTER_NODES: elasticsearch:9200
-
-
+    depends_on:
+      postgres_db:
+        condition: service_started
+      elasticsearch:
+        condition: service_healthy
+    restart: always
 
 volumes:
   postgres_data:
-  es_data:
