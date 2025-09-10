@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Repository
@@ -13,6 +14,13 @@ public interface AdvertisementElasticSearchRepository extends ElasticsearchRepos
 
 
     Page<AdvertisementDocument> findByTitle(String title, Pageable pageable);
+
+    Page<AdvertisementDocument> findByTitleContaining(String keyword, Pageable pageable);
+
+    Page<AdvertisementDocument> findByHashtagsContaining(String hashtag, Pageable pageable);
+
+    Page<AdvertisementDocument> findByPriceBetween(BigDecimal min, BigDecimal max, Pageable pageable);
+
 
 
 

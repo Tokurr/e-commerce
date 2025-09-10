@@ -3,11 +3,15 @@ package com.example.ecoomerce.advertisement.controller;
 import com.example.ecoomerce.advertisement.dto.AdvertisementDto;
 import com.example.ecoomerce.advertisement.dto.CreateAdvertisementRequest;
 import com.example.ecoomerce.advertisement.dto.UpdateAdvertisementRequest;
+import com.example.ecoomerce.advertisement.model.AdvertisementDocument;
 import com.example.ecoomerce.advertisement.service.AdvertisementService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -54,6 +58,27 @@ public class AdvertisementController {
     }
 
 
+    @GetMapping("/title")
+    public ResponseEntity<Page<AdvertisementDocument>> searchByTitle(
+            @RequestParam String keyword,
+            Pageable pageable) {
+        return ResponseEntity.ok(advertisementService.searchByTitle(keyword, pageable));
+    }
+
+    @GetMapping("/hashtag")
+    public ResponseEntity<Page<AdvertisementDocument>> searchByHashtag(
+            @RequestParam String hashtag,
+            Pageable pageable) {
+        return ResponseEntity.ok(advertisementService.searchByHashtag(hashtag, pageable));
+    }
+
+    @GetMapping("/price")
+    public ResponseEntity<Page<AdvertisementDocument>> filterByPrice(
+            @RequestParam BigDecimal min,
+            @RequestParam BigDecimal max,
+            Pageable pageable) {
+        return ResponseEntity.ok(advertisementService.filterByPrice(min, max, pageable));
+    }
 
 
 }

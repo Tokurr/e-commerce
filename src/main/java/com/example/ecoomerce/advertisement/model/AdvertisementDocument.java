@@ -29,7 +29,7 @@ public class AdvertisementDocument {
 
     @Id
     @GeneratedValue
-    private UUID id;
+    private String id;
 
     @Field(type = FieldType.Keyword)
     private String title;

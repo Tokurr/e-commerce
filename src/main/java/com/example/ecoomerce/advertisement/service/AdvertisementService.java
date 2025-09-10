@@ -12,8 +12,11 @@ import com.example.ecoomerce.advertisement.repository.AdvertisementRepository;
 import com.example.ecoomerce.user.exception.UserNotFoundException;
 import com.example.ecoomerce.user.model.User;
 import com.example.ecoomerce.user.service.UserService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
@@ -85,7 +88,7 @@ public class AdvertisementService {
         advertisement.setLastModifiedDate(LocalDateTime.now());
         advertisement.setHashtags(updateAdvertisementRequest.getHashtag());
 
-        AdvertisementDocument advertisementDocument = new AdvertisementDocument(advertisement.getId(),advertisement.getTitle(),advertisement.getDescription(),advertisement.getHashtags(),advertisement.getPrice(),advertisement.getUser().getId());
+        AdvertisementDocument advertisementDocument = new AdvertisementDocument(advertisement.getId().toString(),advertisement.getTitle(),advertisement.getDescription(),advertisement.getHashtags(),advertisement.getPrice(),advertisement.getUser().getId());
 
         advertisementRepository.save(advertisement);
         advertisementElasticSearchRepository.save(advertisementDocument);
@@ -106,6 +109,16 @@ public class AdvertisementService {
             throw  new AdvertisementNotFoundException("Advertisement not found by id: " + id);
         }
     }
+    public Page<AdvertisementDocument> searchByTitle(String keyword, Pageable pageable) {
+        return advertisementElasticSearchRepository.findByTitleContaining(keyword, pageable);
+    }
 
+    public Page<AdvertisementDocument> searchByHashtag(String hashtag, Pageable pageable) {
+        return advertisementElasticSearchRepository.findByHashtagsContaining(hashtag, pageable);
+    }
+
+    public Page<AdvertisementDocument> filterByPrice(BigDecimal min, BigDecimal max, Pageable pageable) {
+        return advertisementElasticSearchRepository.findByPriceBetween(min, max, pageable);
+    }
 
 }
