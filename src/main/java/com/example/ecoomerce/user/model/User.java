@@ -1,5 +1,6 @@
 package com.example.ecoomerce.user.model;
 
+import com.example.ecoomerce.advertisement.model.Advertisement;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -34,6 +35,11 @@ public class User {
 
     @OneToMany(mappedBy = "user",fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
     private Set<CommunicationInfo> communicationInfoList = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Advertisement> advertisements = new HashSet<>();
+
     boolean isActive;
 
     public User(String mail, String firstName, String lastName, String phoneNumber,Boolean isActive) {

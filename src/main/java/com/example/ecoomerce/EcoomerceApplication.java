@@ -14,13 +14,7 @@ import java.util.Date;
 
 @SpringBootApplication
 public class EcoomerceApplication {
-/*
-	private static AdvertisementElasticSearchRepository advertisementElasticSearchRepository;
 
-	public EcoomerceApplication(AdvertisementElasticSearchRepository advertisementElasticSearchRepository) {
-		this.advertisementElasticSearchRepository = advertisementElasticSearchRepository;
-	}
-*/
 	public static void main(String[] args) {
 		SpringApplication.run(EcoomerceApplication.class, args);
 
@@ -31,31 +25,5 @@ public class EcoomerceApplication {
 
 	}
 
-/*
-	@Bean
-	public CommandLineRunner demoData() {
-		return args -> {
-			Date now = new Date();
-
-			Advertisement adv1 = new Advertisement(
-					"1",
-					"Laptop",
-					"16 GB RAM, 512 GB SSD, i7 işlemci",
-					15000.0,
-					now,
-					now
-			);
-
-			advertisementElasticSearchRepository.save(adv1);
-			System.out.println("Kayıt eklendi: " + adv1);
-
-			Pageable pageable = PageRequest.of(0, 2);
-			Page<Advertisement> findAdvertisement =
-					advertisementElasticSearchRepository.findByTitle("Laptop", pageable);
-
-			findAdvertisement.getContent().forEach(System.out::println);
-		};
-	}
-*7
 
 }

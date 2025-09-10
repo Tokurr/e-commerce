@@ -1,46 +1,51 @@
 package com.example.ecoomerce.advertisement.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import com.example.ecoomerce.user.model.User;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.elasticsearch.annotations.DateFormat;
-import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
 
-import java.util.Date;
 
-@Document(indexName = "advertisement")
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.*;
+
+@Entity
+@Table(name = "advertisements")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Advertisement {
-    public Advertisement(String title, String description, Double price, Date creationDate, Date lastModifiedDate) {
+
+    public Advertisement(String title, String description, BigDecimal price, User user, Set<String> hashtags) {
         this.title = title;
         this.description = description;
         this.price = price;
-        this.creationDate = creationDate;
-        this.lastModifiedDate = lastModifiedDate;
+        this.creationDate = LocalDateTime.now();
+        this.lastModifiedDate = LocalDateTime.now();
+        this.user = user;
+        this.hashtags = hashtags;
     }
 
     @Id
-    private String id;
+    @GeneratedValue
+    private UUID id;
 
-    @Field(type = FieldType.Keyword)
     private String title;
-
-    @Field(type = FieldType.Keyword)
     private String description;
 
-    private Double price;
+    @ElementCollection
+    @CollectionTable(name = "advertisement_hashtags", joinColumns = @JoinColumn(name = "advertisement_id"))
+    @Column(name = "hashtag")
+    private Set<String> hashtags = new HashSet<>();
 
-    @Field(type = FieldType.Date, format = DateFormat.basic_date_time)
-    private Date creationDate;
+    private BigDecimal price;
 
-    @Field(type = FieldType.Date, format = DateFormat.basic_date_time)
-    private Date lastModifiedDate;
+    private LocalDateTime creationDate;
+    private LocalDateTime lastModifiedDate;
 
-
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 }

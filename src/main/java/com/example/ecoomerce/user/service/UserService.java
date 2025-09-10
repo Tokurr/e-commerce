@@ -93,10 +93,14 @@ public class UserService {
         }
     }
 
-    protected User findByUserId(Long id)
+    public User findByUserId(Long id)
     {
        return userRepository.findById(id).orElseThrow(()-> new UserNotFoundException("User not found with id: " + id));
     }
 
+    public boolean isExistUser(Long id)
+    {
+        return userRepository.existsById(id);
+    }
 
 }
