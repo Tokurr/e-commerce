@@ -4,6 +4,7 @@ import com.example.ecoomerce.advertisement.dto.AdvertisementDto;
 import com.example.ecoomerce.advertisement.dto.CreateAdvertisementRequest;
 import com.example.ecoomerce.advertisement.dto.UpdateAdvertisementRequest;
 import com.example.ecoomerce.advertisement.service.AdvertisementService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +23,7 @@ public class AdvertisementController {
     }
 
     @PostMapping
-    public ResponseEntity<AdvertisementDto> createAdvertisement(@RequestBody CreateAdvertisementRequest createAdvertisementRequest)
+    public ResponseEntity<AdvertisementDto> createAdvertisement(@Valid @RequestBody CreateAdvertisementRequest createAdvertisementRequest)
     {
         return ResponseEntity.ok(advertisementService.createAdvertisement(createAdvertisementRequest));
     }
@@ -34,7 +35,7 @@ public class AdvertisementController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AdvertisementDto> updateAdvertisement(@PathVariable UUID id, @RequestBody UpdateAdvertisementRequest updateAdvertisementRequest)
+    public ResponseEntity<AdvertisementDto> updateAdvertisement(@PathVariable UUID id,@Valid @RequestBody UpdateAdvertisementRequest updateAdvertisementRequest)
     {
         return ResponseEntity.ok(advertisementService.updateAdvertisement(id,updateAdvertisementRequest));
     }
